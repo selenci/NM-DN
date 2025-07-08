@@ -1,0 +1,9 @@
+name = "Naloga11"
+uuid = "60bad4c8-58f3-40cb-b015-64251801465a"
+authors = ["MATEJ-VICTUS\\klanc <klancar.matej@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

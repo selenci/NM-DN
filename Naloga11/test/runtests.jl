@@ -1,16 +1,22 @@
+# Uvozimo potrebni knjižnici: Test za izvajanje testov in Naloga11 za definicije, ki jih testiramo.
 using Test
-using DN1
+using Naloga11
 
-#A = [1 0 1 0 0; -1 2 0 0 0; 0 -1 ]
-
+# Definiramo polno (gosto) matriko A, ki jo bomo uporabili za primerjavo z našo redko matriko.
 A = [1 0 1 0 0; -1 2 0 0 0; 0 -1 5 0 -1; 0 0 0 1 0; 1 0 0 0 2]
 
+# Definiramo matriki, ki predstavljata našo redko matriko.
+# V vsebuje vrednosti neničelnih elementov.
 V = [1 1 0; -1 2 0; -1 5 -1; 1 0 0; 1 2 0]
+# I vsebuje stolpčne indekse neničelnih elementov.
 I = [1 3 0; 1 2 0; 2 3 5; 4 0 0; 1 5 0]
 
+# S pomočjo matrik V in I ustvarimo objekt RedkaMatrika.
 A_r = RedkaMatrika(V, I)
 
+# Testni sklop, ki preverja, ali je dostop do elementov redke matrike enak kot pri polni.
 @testset "Matriki sta enaki" begin
+    # Iteriramo čez vse elemente in preverimo enakost.
     for i = 1:5 
         for j = 1:5
             @test A[i, j] == A_r[i, j]
@@ -19,45 +25,59 @@ A_r = RedkaMatrika(V, I)
 end
 
 
+# Testni sklop, ki preverja, ali lahko pravilno nastavljamo vrednosti v redki matriki (funkcionalnost setindex!).
 @testset "Matriki lahko nastavimo vrednosti" begin
+    # Ustvarimo kopijo matrike, da ne spremenimo originalne A_r med testiranjem.
     test_matrix = RedkaMatrika(copy(V), copy(I))
+    # Nastavimo nekaj novih vrednosti na različnih pozicijah.
     test_matrix[1, 1] = 34.0
     test_matrix[3, 1] = 21.0
     test_matrix[5, 4] = 12.0
 
+   # Preverimo, ali so bile vrednosti pravilno nastavljene.
    @test test_matrix[1, 1] == 34.0
    @test test_matrix[3, 1] == 21.0
    @test test_matrix[5, 4] == 12.0
 
 end
 
+# Testni sklop za firstindex, ki preverja pravilno implementacijo vmesnika za polja (arrays).
 @testset "Prvi index" begin
     @test firstindex(A_r) == 1
     @test firstindex(A_r, 1) == 1
 end
 
+# Testni sklop za lastindex. Preverja meje matrike po posameznih dimenzijah.
 @testset "Zadnji index" begin
-    @test lastindex(A_r) == 25
-    @test lastindex(A_r, 1) == 5
-    @test lastindex(A_r, 2) == 5
-    @test lastindex(A_r, 3) == 1
+    @test lastindex(A_r) == 25 # Skupno število elementov (5*5) pri linearnem indeksiranju
+    @test lastindex(A_r, 1) == 5 # Zadnji indeks v prvi dimenziji (vrstice)
+    @test lastindex(A_r, 2) == 5 # Zadnji indeks v drugi dimenziji (stolpci)
+    @test lastindex(A_r, 3) == 1 # Standardno obnašanje v Julii za dimenzije, ki presegajo definirane
 end
 
+# Testiramo, ali množenje redke matrike z vektorjem vrne pravilen rezultat.
 @testset "Množenje z vektorjem" begin
     v = [1; 2; 3; 4; 5]
+    # Preverimo produkt A_r * v.
     @test A_r * v == [4; 3; 8; 4; 11]
 end
 
+# Testni sklop za reševanje sistema linearnih enačb A*x = b z metodo SOR (Successive Over-Relaxation).
 @testset "Reševanje s sor" begin
+    # Definiramo vektor desnih strani b in začetni približek x0.
     b = [4.0; 3.0; 8.0; 4.0; 11.0]
     x0 = [1.0; 1; 1; 1; 1]
-    x = sor(A_r, b, x0, 1.0)
+    # Poženemo metodo SOR z relaksacijskim parametrom omega = 1.0 (kar ustreza Gauss-Seidlovi metodi).
+    x, _ = sor(A_r, b, x0, 1.0)
 
+    # Preverimo, ali je izračunana rešitev x približno enaka pričakovani rešitvi.
     @test isapprox(x, [1.0, 2, 3, 4, 5])
 end
 
 
 using Graphs
+
+# Funkcija, ki zgradi graf tipa 'krožna lestev' z 2n vozlišči.
 function krožna_lestev(n)
     G = SimpleGraph(2 * n)
     # prvi cikel
@@ -115,10 +135,11 @@ function desne_strani(G::AbstractGraph, sprem, koordinate)
     return b
 end
 
+# Preverimo, da ne pride do napake.
 @testset "Reševanje problema vložitve matrik" begin
     G = krožna_lestev(20)
     sprem = setdiff(vertices(G), 1:18)
     A = matrika(G, sprem)
     b = desne_strani(G, sprem, rand(18))
-    x = sor(A, b, rand(length(b)), 1.2)
+    x, _ = sor(A, b, rand(length(b)), 1.2)
 end
