@@ -1,4 +1,4 @@
-module DN2
+module Naloga213
 
 greet() = print("Hello World!")
 
