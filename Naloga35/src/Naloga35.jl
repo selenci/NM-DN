@@ -1,4 +1,4 @@
-module DN3
+module Naloga35
 
 using DifferentialEquations
 using Plots
@@ -60,7 +60,7 @@ function narisi_odvisnost_periode(points=30)
         lw = 2,
         legend = false)
 
-    ime_datoteke = "perioda_vs_kot.png"
+    ime_datoteke = "slike/perioda_vs_kot.png"
     savefig(graf, ime_datoteke)
     println("Graf shranjen v $ime_datoteke")
 end
@@ -83,17 +83,11 @@ function primerjaj(zacetni_kot)
     naslov = "Primerjava nihanja (θ₀ = $(stopinje)°)"
     title!(graf, naslov)
     
-    ime_datoteke = "primerjava_$(round(zacetni_kot, digits=2)).png"
+    ime_datoteke = "slike/primerjava_$(round(zacetni_kot, digits=2)).png"
     savefig(graf, ime_datoteke)
     println("Graf shranjen v $ime_datoteke")
 end
 
-primerjaj(π/8)
-primerjaj(π/6)
-primerjaj(π/4)
-primerjaj(π/3)
-primerjaj(π/2)
-
-narisi_odvisnost_periode()
+export primerjaj, narisi_odvisnost_periode
 
 end
