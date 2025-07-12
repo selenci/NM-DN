@@ -54,7 +54,6 @@ Manifest.toml
 *.nlo
 *.nls
 *.out
-*.pdf
 *.pyg
 *.run.xml
 *.snm
