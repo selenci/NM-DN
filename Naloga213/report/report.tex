@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[slovene]{babel}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+\usepackage{ijcai19}
+\usepackage{listings}
+% Use the postscript times font!
+\usepackage{times}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{makecell}
+
+\urlstyle{same}
+
+\title{Druga domača naloga}
+
+\author{
+Matej Klančar (63200136)
+}
+
+\begin{document}
+\maketitle
+\vspace{-1.5cm}
+\section{Uvod}
+
+Cilj naloge je izpeljati dvotočkovno Gauss-Legendrovo integracijsko pravilo. To pravilo omogoča numerično 
+aproksimacijo določenega integrala oblike:
+\[
+\int_{a}^{b} f(x) \,dx \approx A f(x_1) + B f(x_2)
+\]
+Ključna ideja Gaussove kvadrature je, da z optimalno izbiro ne le uteži $A$ in $B$, ampak tudi vozlišč $x_1$ in $x_2$, 
+dosežemo maksimalno natančnost. Pravilo z $n=2$ točkama je lahko točno za polinome do stopnje $2n-1=3$.
+
+Za poenostavitev izpeljave najprej obravnavamo standardni interval $[-1, 1]$. Pravilo mora biti eksaktno za funkcije 
+$f(x) = 1, x, x^2, x^3$. Za te funkcije mora veljati enakost:
+\[
+\int_{-1}^{1} f(x) \,dx = A f(x_1) + B f(x_2)
+\]
+S tem pristopom pridobimo sistem štirih nelinearnih enačb s štirimi neznankami:
+\begin{align}
+f(x) = 1: \quad & \int_{-1}^{1} 1 \,dx = 2 = A + B \label{eq:1} \\
+f(x) = x: \quad & \int_{-1}^{1} x \,dx = 0 = A x_1 + B x_2 \label{eq:2} \\
+f(x) = x^2: \quad & \int_{-1}^{1} x^2 \,dx = \frac{2}{3} = A x_1^2 + B x_2^2 \label{eq:3} \\
+f(x) = x^3: \quad & \int_{-1}^{1} x^3 \,dx = 0 = A x_1^3 + B x_2^3 \label{eq:4}
+\end{align}
+Ko določimo vrednosti neznank na intervalu $[-1, 1]$, lahko pravilo z linearno transformacijo preslikamo
+ na poljuben interval $[x_i, x_{i+1}]$.
+
+\section{Reševanje sistema enačb}
+
+
+Za reševanje sistema smo uporabili predpostavko o simetriji, ki je značilna za Gauss-Legendrove 
+formule. Privzeli smo, da sta vozlišči simetrični glede na koordinatno izhodišče, torej $x_2 = -x_1$. 
+Za lažji zapis smo označili $x_1 = x$, iz česar sledi $x_2 = -x$. Sistem enačb \eqref{eq:1}-\eqref{eq:4} se je tako poenostavil na tri 
+enačbe
+\begin{align*}
+    A + B &= 2 \\
+    Ax - Bx &= 0 \\
+    Ax^2 + Bx^2 &= \frac{2}{3},
+\end{align*}
+zadnja enačba pa služi preverjanju pravilnosti rešitve.
+
+Iz prve enačbe smo izrazili $B$:
+\[
+B = 2 - A
+\]
+To smo vstavili v drugo enačbo, $Ax - Bx = 0$:
+\[
+Ax - (2-A)x = 0
+\]
+Izpostavili smo $x$:
+\[
+x(A - (2-A)) = 0 \implies x(2A - 2) = 0 \implies 2x(A-1) = 0
+\]
+Iz te enačbe sledita dve možni rešitvi: $x=0$ ali $A=1$.
+Primer $x=0$ bi pomenil, da je $x_1=x_2=0$. Če to vstavimo v tretjo enačbo, 
+dobimo $A(0)^2 + B(0)^2 = 0$, kar je v protislovju z zahtevo, da je rezultat 
+$\frac{2}{3}$. Zato smo to možnost zavrgli.
+
+Edina preostala možnost je $A=1$. Iz zveze $B = 2 - A$ takoj sledi:
+\[
+B = 2 - 1 = 1
+\]
+Uteži $A=1$ in $B=1$ vstavimo v tretjo enačbo, da določimo še vrednost vozlišč:
+\[
+x^2 + x^2 = \frac{2}{3} \implies 2x^2 = \frac{2}{3} \implies x^2 = \frac{1}{3}
+\]
+Rešitev je $x = \pm\frac{1}{\sqrt{3}}$. S tem smo dobili vozlišči:
+\[
+x_1 = -\frac{1}{\sqrt{3}}, \quad x_2 = \frac{1}{\sqrt{3}}
+\]
+Za konec smo rešitev preverili še v prvotni četrti enačbi:
+\[ Ax_1^3 + Bx_2^3 = \left(-\frac{1}{\sqrt{3}}\right)^3 + \left(\frac{1}{\sqrt{3}}\right)^3 = 
+-\left(\frac{1}{\sqrt{3}}\right)^3 + \left(\frac{1}{\sqrt{3}}\right)^3 = 0 \]
+Ker je tudi ta enačba izpolnjena, smo potrdili pravilnost izpeljane rešitve.
+
+\section{Transformacija na poljuben interval}
+
+Ko imamo izpeljano pravilo na standardnem intervalu $t \in [-1, 1]$, ga moramo preslikati 
+na poljuben interval $x \in [a, b]$. To storimo z linearno transformacijo, ki 
+preslika $t \mapsto x$:
+\[
+x(t) = m t + c
+\]
+Konstanti $m$ in $c$ določimo iz pogojev, da se krajišča intervalov preslikajo vase:
+\[
+x(-1) = -m + c = a \quad \text{in} \quad x(1) = m + c = b
+\]
+Z reševanjem sistema dveh enačb dobimo $c = \frac{a+b}{2}$ in $m = \frac{b-a}{2}$. 
+Transformacija je torej:
+\[
+x(t) = \frac{b-a}{2}t + \frac{a+b}{2}
+\]
+Za substitucijo v integralu potrebujemo še zvezo med diferencialoma. Z odvajanjem zgornje 
+enačbe po $t$ dobimo:
+\[
+\frac{dx}{dt} = \frac{b-a}{2} \implies dx = \frac{b-a}{2} dt
+\]
+Originalni integral lahko sedaj zapišemo kot integral po spremenljivki $t$ na intervalu $[-1, 1]$:
+\[
+\int_{a}^{b} f(x) \,dx = \int_{-1}^{1} f\left(\frac{b-a}{2}t + \frac{a+b}{2}\right) \frac{b-a}{2} \,dt
+=  \frac{b-a}{2} \int_{-1}^{1} f\left(\frac{b-a}{2}t + \frac{a+b}{2}\right) \,dt
+\]
+Z uporabo izpeljanega Gauss-Legendrovega integracijskega pravila sedaj pridemo do končne formule:
+\[
+\int_{a}^{b} f(x) \,dx \approx \frac{b-a}{2} \left[ f\left( \frac{a+b}{2} - \frac{b-a}{2\sqrt{3}} \right) 
++ f\left( \frac{a+b}{2} + \frac{b-a}{2\sqrt{3}} \right) \right]
+\]
+
+\section{Ocena števila izračunov funkcijskih vrednosti}
+
+Da bi ocenili, koliko izračunov funkcijske vrednosti je 
+potrebnih za izračun integrala
+\[ \int_{0}^{5} \frac{\sin x}{x} \,dx \]
+na 10 decimalnih mest natančno, smo uporabili numerični pristop. 
+V ta namen smo pripravili program v jeziku Julia, ki implementira 
+sestavljeno Gaussovo pravilo z dvema točkama.
+
+Program deluje iterativno. Začne z razdelitvijo integracijskega 
+intervala $[0, 5]$ na en sam podinterval in nato v zanki postopoma 
+povečuje število podintervalov. V vsakem koraku izračuna nov, natančnejši 
+približek za vrednost integrala. Ta približek se sproti primerja z vnaprej 
+znano, zelo natančno referenčno vrednostjo. Postopek se nadaljuje, dokler 
+absolutna vrednost napake ne pade pod prag $10^{-10}$.
+
+Po končani izvedbi je program poročal, da je bilo za dosego želene
+natančnosti potrebnih $N = 123$ podintervalov. Ker na vsakem od 123 
+podintervalov uporabimo dvotočkovno Gaussovo pravilo, ki zahteva natanko 
+dva izračuna funkcijske vrednosti, je skupno število potrebnih izračunov:
+\[
+\text{Število izračunov} = 2N = 246
+\]
+\end{document}
+
