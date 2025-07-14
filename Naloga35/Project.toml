@@ -1,0 +1,8 @@
+name = "Naloga35"
+uuid = "301d6294-106c-4a06-a554-b615b2590547"
+authors = ["MATEJ-VICTUS\\klanc <klancar.matej@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
