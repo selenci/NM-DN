@@ -70,7 +70,7 @@ Ta sistem je primeren vhod za metode, ki diferencialne enačbe rešujejo z numer
 V tej nalogi uporabimo metodo DOPRI5 (Dormand-Prince 5).
 
 \subsection{Harmonična aproksimacija}
-Za majhne začetne odklone ($\theta_0 \ll 1$) lahko funkcijo $\sin(\theta)$ aproksimiramo z 
+Za majhne začetne odklone ($\theta_0 \ll 1$) lahko funkcijo $\sin(\theta)$ aproksimiramo s 
 $\sin(\theta) \approx \theta$. S tem poenostavimo enačbo \ref{eq:nelinearna} v enačbo za harmonično nihalo:
 \begin{equation}
 \ddot{\theta}(t) + \frac{g}{l} \theta(t) = 0
@@ -153,7 +153,7 @@ Iz grafa je jasno razvidno, da perioda matematičnega nihala ni konstantna, temv
 začetnega kota (in s tem energije nihala). Pri majhnih kotih je perioda blizu 2s, kot pri harmoničnem nihalu. 
 Z večanjem amplitude pa postaja odstopanje vse večje.
 
-\subsection{Primerjava z harmonično aproksimacijo}
+\subsection{Primerjava s harmonično aproksimacijo}
 Na slikah v figuri \ref{fig:primerjave} je prikazana primerjava časovnega poteka nihanja med nelinearnim 
 modelom (polna črta) in harmonično aproksimacijo (črtkana črta) za različne začetne kote, od $22.5^\circ$ do $90^\circ$.
 
@@ -203,7 +203,7 @@ Opazimo lahko naslednje:
     \item Pri manjših kotih (sliki \ref{fig:comp22} in \ref{fig:comp30}) je ujemanje med modeloma zelo dobro. 
     Harmonična aproksimacija je ustrezna, čeprav se že po nekaj nihajih pojavi majhen fazni zamik.
     \item Z večanjem kota (sliki \ref{fig:comp45} in \ref{fig:comp60}) postanejo razlike očitne. Perioda 
-    nelinearnega nihala je vidno daljša, kar povzroči, da zaostaja za harmonično aproksimacijo.
+    nelinearnega nihala je vidno daljša, kar povzroči zaostoj za harmonično aproksimacijo.
     \item Pri velikem kotu $90^\circ$ (slika \ref{fig:comp90}) je harmonična aproksimacija povsem nezadostna. 
     Perioda matematičnega nihala je bistveno daljša, kar potrjuje opažanja iz slike \ref{fig:perioda}.
 \end{itemize}
