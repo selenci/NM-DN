@@ -109,9 +109,9 @@ več primerov.
 
 \subsection{Množenje z vektorjem}
 Algoritem deluje po definiciji matričnega množenja. Ustvarimo nov ničelni vektor \texttt{b}. 
-Nato z dvema gnezdenima zankama iterira čez vse elemente \texttt{(i, j)} 
+Nato z dvema gnezdenima zankama iteriramo čez vse elemente \texttt{(i, j)} 
 navidezne polne matrike. V vsakem koraku 
-izračuna produkt \texttt{T[i, j] * v[j]} in ga prištejemo \texttt{i}-ti 
+izračunamo produkt \texttt{T[i, j] * v[j]} in ga prištejemo \texttt{i}-ti 
 komponenti rezultata \texttt{b[i]}.
 
 
@@ -131,7 +131,7 @@ x_i^{(k+1)} = (1 - \omega) x_i^{(k)} + \frac{\omega}{A_{ii}}
 \label{eq:sor_short}
 \end{equation}
 Ključna značilnost metode je, da pri izračunu nove vrednosti $x_i^{(k+1)}$ 
-takoj uporabi že posodobljene komponente iz iste iteracije (za $j<i$). 
+takoj uporabimo že posodobljene komponente iz iste iteracije (za $j<i$). 
 Parameter $\omega$ (omega) uravnava hitrost konvergence.
 
 \subsection{Implementacija}
@@ -149,7 +149,7 @@ Naša implementacija je sestavljena iz dveh glavnih delov:
     \texttt{sor} zaporedno kliče \texttt{sor\_korak} in po vsaki iteraciji 
     preverja pogoj za ustavitev. Iteracija se ustavi, ko je neskončna norma 
     vektorja ostanka, $\|A\boldsymbol{x}^{(k)} - \boldsymbol{b}\|_\infty$, 
-    manjša od podane tolerance \texttt{tol}. To v praksi pomeni, da se ustavi, 
+    manjša od podane tolerance \texttt{tol}. To pomeni, da se zanka ustavi, 
     ko največja absolutna vrednost katerekoli komponente vektorja ostanka pade 
     pod tolerančno mejo.
 \end{enumerate}
